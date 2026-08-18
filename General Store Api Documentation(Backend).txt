@@ -1,0 +1,80 @@
+📖 General Store API Documentation (Backend)
+🔑 Authentication
+- POST /api/register/
+Registers a new user.
+
+Body:
+{
+  "username": "kuljinder",
+  "email": "kuljinder@example.com",
+  "password": "StrongPass123!"
+}
+- Response:
+{
+  "user": {
+    "id": 1,
+    "username": "kuljinder",
+    "email": "kuljinder@example.com"
+  },
+  "refresh": "...",
+  "access": "..."
+}
+- POST /api/token/
+Login with username + password → returns JWT tokens.
+- POST /api/token/refresh/
+Refresh access token.
+📦 Products- GET /api/products/ → List all products (public).
+- GET /api/products/{id}/ → Get product details.
+- POST /api/products/ → Create product (admin only).
+Body:
+{
+  "name": "Laptop",
+  "description": "High performance laptop",
+  "category": "Electronics",
+  "price": 500.00,
+  "stock_quantity": 10,
+  "image_url": "http://example.com/laptop.jpg"
+}
+- PUT/PATCH /api/products/{id}/ → Update product (admin only).
+- DELETE /api/products/{id}/ → Delete product (admin only).
+🛒 Orders- GET /api/orders/ → List user’s orders (auth required).
+- GET /api/orders/{id}/ → Get order details with nested items.
+- POST /api/orders/ → Create new order (auth required).
+Body:
+{
+  "total_amount": 0
+}
+- (status defaults to "pending", user auto‑attached)
+- PUT/PATCH /api/orders/{id}/ → Update order status (admin/staff).
+- DELETE /api/orders/{id}/ → Cancel order.
+📦 Order Items- POST /api/order-items/ → Add item to order (auth required).
+Body:
+{
+  "order": 1,
+  "product_id": 2,
+  "quantity": 2
+}
+- Response:
+{
+  "id": 1,
+  "order": 1,
+  "product": {
+    "id": 2,
+    "name": "Laptop",
+    "price": "500.00"
+  },
+  "quantity": 2,
+  "price": "1000.00",
+  "updated_at": "2025-11-29T14:30:00Z"
+}
+- GET /api/order-items/ → List all items (auth required).
+- GET /api/order-items/{id}/ → Get item details.
+- PUT/PATCH /api/order-items/{id}/ → Update quantity (stock validated).
+- DELETE /api/order-items/{id}/ → Remove item.
+🎯 Key Features- ✅ JWT authentication (register, login, refresh).
+- ✅ Products: public read, admin write.
+- ✅ Orders: auto‑attach user, default status = pending.
+- ✅ OrderItems: auto‑calculate price, update order total, decrease stock, validate stock.
+- ✅ Clean error responses (HTTP 400) for insufficient stock.
+- ✅ Nested order → items response for frontend convenience.
+👉 With this API outline, your frontend team (or you, if you’re building it yourself) can directly map pages to endpoints.Do you want me to sketch a frontend roadmap (pages + which API they call) so you can start coding React/Django templates without confusion?

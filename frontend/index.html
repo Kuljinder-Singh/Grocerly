@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grocerly | Premium Organic Market</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <div class="logo">
+                <div class="logo-icon"><i data-lucide="leaf"></i></div>
+                <span>Grocerly</span>
+            </div>
+            
+            <div class="nav-links">
+                <a href="#" class="active">Shop</a>
+                <a href="#">Recipes</a>
+                <a href="#">Farmers</a>
+            </div>
+
+            <div class="nav-actions">
+                <div class="search-box">
+                    <i data-lucide="search" style="width: 18px; color: var(--text-muted);"></i>
+                    <input type="text" placeholder="Search groceries..." id="grocery-search">
+                    <button class="search-btn" id="search-trigger">Search</button>
+                </div>
+                
+                <button class="cart-trigger" onclick="toggleCart()">
+                    <i data-lucide="shopping-cart" style="width: 20px;"></i>
+                    <span id="cart-count">0</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg-blobs">
+            <div class="blob blob-1"></div>
+            <div class="blob blob-2"></div>
+        </div>
+        <div class="container">
+            <div class="hero-wrapper">
+                <div class="hero-text">
+                    <span class="badge-premium">Farm to Table • 2026</span>
+                    <h1>Freshness <br><span class="text-gradient">Delivered Daily.</span></h1>
+                    <p>Premium organic groceries sourced from local farmers. Experience the Grocerly difference with 1-hour delivery.</p>
+                    <div class="hero-btns">
+                        <a href="#shop" class="btn btn-primary">Shop Fresh</a>
+                        <a href="#" class="btn btn-secondary">Our Farmers</a>
+                    </div>
+                </div>
+                
+                <div class="hero-visual">
+                    <!-- Deal of the Day Card -->
+                    <div class="deal-card">
+                        <div class="deal-badge">Hot Deal</div>
+                        <div class="deal-content">
+                            <div class="deal-emoji">🥑</div>
+                            <div class="deal-info">
+                                <h3>Hass Avocados</h3>
+                                <p>Premium Grade • 3 Units</p>
+                                <div class="deal-pricing">
+                                    <span class="deal-price-new">$3.50</span>
+                                    <span class="deal-price-old">$5.99</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="deal-timer">
+                            <div class="timer-unit"><span id="timer-h">04</span><small>hrs</small></div>
+                            <div class="timer-unit"><span id="timer-m">12</span><small>min</small></div>
+                            <div class="timer-unit"><span id="timer-s">45</span><small>sec</small></div>
+                        </div>
+                        <button class="btn btn-primary deal-btn" onclick="addToCart(1)">Add to Basket</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container" id="shop">
+        <div class="section-header">
+            <div>
+                <span style="color: var(--primary); font-weight: 700; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px;">Marketplace</span>
+                <h2 class="section-title">Seasonal Picks</h2>
+            </div>
+            <div class="filter-group">
+                <button class="filter-pill active" onclick="filterItems('all')">All</button>
+                <button class="filter-pill" onclick="filterItems('Produce')">Produce</button>
+                <button class="filter-pill" onclick="filterItems('Dairy')">Dairy</button>
+                <button class="filter-pill" onclick="filterItems('Bakery')">Bakery</button>
+            </div>
+        </div>
+
+        <div class="product-grid" id="product-grid">
+            <!-- Products injected via script.js -->
+        </div>
+    </main>
+
+    <!-- Cart Sidebar -->
+    <div class="overlay" id="cart-overlay" onclick="toggleCart()"></div>
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h2>Your Basket</h2>
+            <button onclick="toggleCart()" style="border:none; background:none; cursor:pointer"><i data-lucide="x"></i></button>
+        </div>
+        <div class="cart-body" id="cart-items">
+            <!-- Cart items injected here -->
+        </div>
+
+        <!-- Payment Section -->
+        <div class="payment-section">
+            <span class="payment-label">Select Payment Method</span>
+            <div class="payment-options">
+                <div class="pay-method active" onclick="selectPayment(this)">
+                    <i data-lucide="credit-card"></i>
+                    <span>Card</span>
+                </div>
+                <div class="pay-method" onclick="selectPayment(this)">
+                    <i data-lucide="smartphone"></i>
+                    <span>Apple</span>
+                </div>
+                <div class="pay-method" onclick="selectPayment(this)">
+                    <i data-lucide="wallet"></i>
+                    <span>Google</span>
+                </div>
+            </div>
+            
+            <div style="display:flex; justify-content:space-between; margin-bottom: 1rem; padding: 0 5px;">
+                <span style="color: var(--text-muted); font-weight: 600;">Subtotal</span>
+                <span id="cart-subtotal" style="font-weight:800; color: var(--text-main);">$0.00</span>
+            </div>
+            <button class="btn btn-primary btn-glow" style="width:100%; display: flex; align-items: center; justify-content: center;" onclick="processCheckout()">
+                Checkout Now • <span id="cart-total" style="margin-left: 5px;">$0.00</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="success-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="success-icon"><i data-lucide="check-circle"></i></div>
+            <h2 style="margin-bottom: 10px;">Order Placed!</h2>
+            <p style="color: var(--text-muted);">Your fresh groceries will arrive in approximately 60 minutes.</p>
+            <button class="btn btn-primary" onclick="closeModal()" style="margin-top: 25px; width: 100%;">Continue Shopping</button>
+        </div>
+    </div>
+
+    <!-- Auth Modals Container -->
+<div class="auth-overlay" id="auth-overlay" onclick="closeAuthModal()"></div>
+
+<!-- Login Modal -->
+<div class="auth-modal" id="login-modal">
+    <div class="auth-header">
+        <h2>Welcome Back</h2>
+        <p>Login to manage your orders</p>
+    </div>
+    <form id="login-form" onsubmit="handleLogin(event)">
+        <div class="form-group">
+            <label>Username</label>
+            <input type="text" id="login-username" required placeholder="e.g. kuljinder">
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" id="login-password" required placeholder="••••••••">
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%;">Sign In</button>
+    </form>
+    <p class="auth-switch">Don't have an account? <a href="#" onclick="switchModal('register')">Register here</a></p>
+</div>
+
+<!-- Register Modal -->
+<div class="auth-modal" id="register-modal">
+    <div class="auth-header">
+        <h2>Join Grocerly</h2>
+        <p>Start your organic journey today</p>
+    </div>
+    <form id="register-form" onsubmit="handleRegister(event)">
+        <div class="form-group">
+            <label>Username</label>
+            <input type="text" id="reg-username" required>
+        </div>
+        <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="reg-email" required>
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" id="reg-password" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%;">Create Account</button>
+    </form>
+    <p class="auth-switch">Already a member? <a href="#" onclick="switchModal('login')">Login here</a></p>
+</div>
+
+    <footer style="padding: 40px 0; text-align: center; border-top: 1px solid var(--border); margin-top: 100px; color: var(--text-muted); font-size: 0.9rem;">
+        <div class="container">
+            <p>&copy; 2026 Grocerly Premium Market. Built for local sustainability.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
