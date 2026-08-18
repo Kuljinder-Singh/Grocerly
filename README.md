@@ -190,11 +190,10 @@ Through this project, I gained practical experience in:
 
 **Kuljinder Singh**
 
-BCA Graduate | Aspiring Data Analyst & Full Stack Developer
+Bsc-IT Graduate | Aspiring Data Analyst & Full Stack Developer
 
-GitHub: https://github.com/your-username
+GitHub: https://github.com/Kuljinder-Singh
 
-LinkedIn: https://linkedin.com/in/your-profile
 
 ---
 
