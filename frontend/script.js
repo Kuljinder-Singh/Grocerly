@@ -9,7 +9,7 @@ let cart = [];
  * Grocerly Authentication & Token Management
  */
 
-const API_BASE = "http://127.0.0.1:8000/api";
+const API_BASE = "https://grocerly-n993.onrender.com/api";
 
 /**
  * 1. Modal Switching Logic
@@ -158,7 +158,7 @@ async function loadGrocerlyApp() {
     }
 
     try {
-        const response = await fetch('http://127.0.0.1:8000/api/products/');
+        const response = await fetch(`${API_BASE}/products/`);
         if (!response.ok) throw new Error('Backend unreachable');
 
         allProducts = await response.json();
@@ -391,7 +391,7 @@ async function processCheckout() {
         const totalPrice = cart.reduce((acc, item) => acc + (parseFloat(item.price) * item.quantity), 0);
         
         // Use your API_BASE variable if defined, otherwise default to local
-        const baseUrl = typeof API_BASE !== 'undefined' ? API_BASE : 'http://127.0.0.1:8000/api';
+        const baseUrl =  API_BASE ;
 
         const orderResponse = await fetch(`${baseUrl}/orders/`, {
             method: 'POST',
